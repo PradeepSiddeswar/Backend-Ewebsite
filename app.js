@@ -29,6 +29,21 @@ app.get("/", (req, res) => {
     res.send("Hello world")
 })
 
+app.post('/api/register', (req, res) => {
+    const { name, email, password, confirmPassword } = req.body;
+  
+    if ( !password || !confirmPassword) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+  
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: 'Passwords do not match' });
+    }
+  
+    // Here you can proceed with user registration or other actions
+    res.json({ message: 'Registration successful' });
+  });
+  
 
 
-app.use("/customername", CustomerSignupRoute)
+app.use("/customersignup", CustomerSignupRoute)

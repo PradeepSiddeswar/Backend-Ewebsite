@@ -1,26 +1,32 @@
-const CustomerNameDB = require("../Model/CustomerSignup_model")
-const path = require("path")
+const CustomerSignupDB = require("../Model/CustomerSignup_model");
 
+const register = async (req, res) => {
+  const { name, phoneNumber, email, password, confirmPassword } = req.body;
 
-exports.create = async (req, res) => {
-    if (!req.body) {
-        res.status(400).send("Name and password are required")
-        return
+  if (!name || !phoneNumber || !email || !password || !confirmPassword) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  if (password !== confirmPassword) {
+    return res.status(400).json({ message: 'Passwords do not match' });
+  }
+
+  try {
+    // Check if email already exists
+    const existingUser = await CustomerSignupDB.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ message: 'Email already exists' });
     }
-    const CustomerName = new CustomerNameDB({
-        name: req.body.name,
-        phone: req.body.phone,
-        email: req.body.email,
-        password: req.body.password,
-        confirmPassword: req.body.confirmPassword
-    })
-    CustomerName.save(CustomerName)
-        .then(data => {
-            res.status(200).send(data)
-        })
-        .catch(error => {
-            res.status(500).send({
-                message: error
-            })
-        })
-}
+
+    // If email is not found, create a new user
+    const newUser = await CustomerSignupDB.create({ name, phoneNumber, email, password, confirmPassword });
+    res.status(201).json(newUser);
+  } catch (error) {
+    console.error('Error registering user:', error);
+    res.status(500).json({ message: 'Error registering user' });
+  }
+};
+
+module.exports = {
+  register,
+};
