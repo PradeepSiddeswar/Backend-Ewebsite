@@ -17,6 +17,12 @@ app.use(bp.urlencoded({extended:false}));
 
 const CustomerSignupRoute = require("./Routes/CustomerSignup_router")
 const Customer1SignupRoute = require("./Routes/Customer1Signup_router")
+const ProdectListRoute = require("./Routes/ProdectList_router")
+const CategoriesRoute = require("./Routes/Categories_Router")
+
+
+
+
 dotenv.config({ path: '.env'})
 const PORT = process.env.PORT || 8080
 console.log("Server Started", PORT)
@@ -38,8 +44,9 @@ app.get("/", (req, res) => {
 })
 
 
-  
-
 app.use(express.static("upload"))
 app.use("/customersignup", CustomerSignupRoute)
 app.use("/customerRegistration", Customer1SignupRoute )
+app.use("/add-cart", ProdectListRoute)
+app.use("/categories", CategoriesRoute)
+
