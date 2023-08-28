@@ -3,6 +3,6 @@ const route = express.Router()
 const CategoriesController = require("../Controller/Categories_Controller")
 
 
-route.get('/', CategoriesController.getCategoriesSubcategoriesHotels)
-
+route.post('/categories-subcategories', CategoriesController.create)
+// route.get('/subcategories/:category', CategoriesController.getSubcategoriesAndHotels)
 module.exports = route

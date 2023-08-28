@@ -48,5 +48,5 @@ app.use(express.static("upload"))
 app.use("/customersignup", CustomerSignupRoute)
 app.use("/customerRegistration", Customer1SignupRoute )
 app.use("/add-cart", ProdectListRoute)
-app.use("/categories", CategoriesRoute)
+app.use("/api", CategoriesRoute)
 

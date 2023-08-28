@@ -1,35 +1,30 @@
-const categoriesDB = require("../Model/Categories_model")
-const Hotel = require("../Model/Hotel_model")
-  
+
+const Categories = require('../Model/Categories_model');
+const Hotel = require('../Model/Hotel_model');
 
 
-exports.getCategoriesSubcategoriesHotels = async (req, res) => {
+exports.create = async (req, res) => {
   try {
-    const categories = await categoriesDB.find();
-    console.log('Categories', categories)
-    const categoriesWithSubcategories = [];
+    const { categoryName, subcategoryName, hotels} = req.body;
 
-    for (const category of categories) {
-      const subcategories = await Hotel.distinct('subcategory', { category: category._id });
-      const subcategoriesWithDetails = [];
+    const category = Categories({ name: categoryName })
+    await category.save();
 
-      for (const subcategory of subcategories) {
-        const hotels = await Hotel.find({ category: category._id, subcategory }).select('hotelName distance image');
-        subcategoriesWithDetails.push({
-          subcategory,
-          hotels
-        });
-      }
+    const subcategoryHotels = hotels.map(hotel => ({
+      ...hotel,
+      category: category._id,
+      subcategory: subcategoryName
+  
+    }));
+   const Hotels = await Hotel.insertMany(subcategoryHotels)
 
-      categoriesWithSubcategories.push({
-        category: category.name,
-        subcategories: subcategoriesWithDetails
+    res.status(201).json({
+            category: category,
+          subcategory: subcategoryName,
+        hotels: Hotels
       });
-    }
-
-    res.json(categoriesWithSubcategories);
   } catch (error) {
-    console.error('Error fetching categories:', error);
-    res.status(500).json({ error: 'Error fetching categories, subcategories, and hotel details' });
+    console.error('Error', error);
+    res.status(500).json({error: 'Error category, subcategory'})
   }
 };

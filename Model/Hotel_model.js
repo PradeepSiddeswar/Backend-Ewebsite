@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const categories1Schema = new mongoose.Schema({
+const hotelSchema = new mongoose.Schema({
   category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category',
+    ref: 'Categories',
     required: true
   },
   subcategory: {
@@ -25,7 +25,12 @@ const categories1Schema = new mongoose.Schema({
   isVeg: {
     type: Boolean,
     required: true
+  },
+  isNonVeg: {
+    type: Boolean,
+    required: true
   }
 });
+const Hotel = mongoose.model('Hotel', hotelSchema)
 
-module.exports = mongoose.model('Categories1', categories1Schema);
+module.exports = Hotel;
