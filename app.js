@@ -5,11 +5,16 @@ const path = require("path")
 const app = express()
 
 app.use(cors({
-  origin: 'http://localhost:3000/',
+  origin: 'http://localhost:3000',
   methods:['GET', 'POT', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 
 }))
+
+app.use(cors({
+  origin: 'http://localhost:3000', // Replace with your React app's URL
+  credentials: true
+}));
 
 const bp = require("body-parser")
 app.use(bp.json());
@@ -19,9 +24,9 @@ const CustomerSignupRoute = require("./Routes/CustomerSignup_router")
 const Customer1SignupRoute = require("./Routes/Customer1Signup_router")
 const ProdectListRoute = require("./Routes/ProdectList_router")
 const CategoriesRoute = require("./Routes/Categories_Router")
-
-
-
+const FormLocationRoute = require("./Routes/FormLocation_Router")
+const distanceRoute = require('./Routes/Distance_router')
+const ImageRoute = require("./Routes/image_router")
 
 dotenv.config({ path: '.env'})
 const PORT = process.env.PORT || 8080
@@ -45,8 +50,11 @@ app.get("/", (req, res) => {
 
 
 app.use(express.static("upload"))
+app.use( express.static('path_to_image_directory'));
 app.use("/customersignup", CustomerSignupRoute)
 app.use("/customerRegistration", Customer1SignupRoute )
 app.use("/add-cart", ProdectListRoute)
 app.use("/api", CategoriesRoute)
-
+app.use("/formLocation", FormLocationRoute)
+app.use('/distances', distanceRoute);
+app.use("/image", ImageRoute)

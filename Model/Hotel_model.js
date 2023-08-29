@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const hotelSchema = new mongoose.Schema({
   category: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Categories',
+    ref: 'Category',
     required: true
   },
   subcategory: {
@@ -15,7 +15,7 @@ const hotelSchema = new mongoose.Schema({
     required: true
   },
   distance: {
-    type: Number,
+    type: String,
     required: true
   },
   image: {
