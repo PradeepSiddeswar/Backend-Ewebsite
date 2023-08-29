@@ -24,3 +24,29 @@ exports.create = async(req, res) => {
                     })
                    })
 }
+
+// find user 
+    exports.find = (req, res) => {
+      if (req.params.title) {
+          const title = req.params.title
+          ImageDB.findOne({ title: title }
+          ).then(data => {
+              if (!data) {
+                  res.status(400).send("User not found")
+              } else {
+                  res.send(data)
+              }
+          })
+              .catch(err => {
+                  res.status(500).send(err)
+              })
+      }
+      else
+          ImageDB.find()
+              .then(user => {
+                  res.send(user)
+              })
+              .catch(err => {
+                  res.status(500).send(err)
+              })
+  }   
