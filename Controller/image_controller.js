@@ -50,3 +50,16 @@ exports.create = async(req, res) => {
                   res.status(500).send(err)
               })
   }   
+
+
+
+  exports.getAllCategory = async (req, res) => {
+    try {
+      const category = await ImageDB.find();
+      res.json({ category });
+    } catch (error) {
+      console.error('Error fetching hotels:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+  

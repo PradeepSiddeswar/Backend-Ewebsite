@@ -1,18 +1,22 @@
 const mongoose = require('mongoose');
 
 const Customer1SignupSchema = new mongoose.Schema({
-    name : {
+    ShopName : {
         type : String,
         required: true
     },
-    phone: {
+    OwnerName: {
+        type: String,
+        required: true
+    },
+    Phone: {
         type : Number,
         required: true
     },
-    email: {
+    Email: {
         type: String,
     },
-    gstRegistrationNo: {
+    GstRegistrationNo: {
         type: Number,
     } ,
     BbmpCertificateNo:{

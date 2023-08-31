@@ -28,6 +28,9 @@ const FormLocationRoute = require("./Routes/FormLocation_Router")
 const distanceRoute = require('./Routes/Distance_router')
 const ImageRoute = require("./Routes/image_router")
 
+
+
+
 dotenv.config({ path: '.env'})
 const PORT = process.env.PORT || 8080
 console.log("Server Started", PORT)
@@ -52,9 +55,15 @@ app.get("/", (req, res) => {
 app.use(express.static("upload"))
 app.use( express.static('path_to_image_directory'));
 app.use("/customersignup", CustomerSignupRoute)
-app.use("/customerRegistration", Customer1SignupRoute )
+app.use("/customerLogin", Customer1SignupRoute )
 app.use("/add-cart", ProdectListRoute)
 app.use("/api", CategoriesRoute)
 app.use("/formLocation", FormLocationRoute)
 app.use('/distances', distanceRoute);
 app.use("/image", ImageRoute)
+
+
+
+
+
+

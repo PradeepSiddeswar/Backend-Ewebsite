@@ -3,38 +3,41 @@ const Categories = require('../Model/Categories_model');
 const Hotel = require('../Model/Hotel_model');
 
 
-exports.create = async (req, res) => {
+exports.createCategoryWithSubcategoryAndHotels = async (req, res) => {
   try {
-    const { categoryName, subcategoryName, hotels} = req.body;
+    const { categoryName, subcategoryName, hotels } = req.body;
 
-    const category = Categories({ name: categoryName })
+    // Create the category
+    const category = new Categories({ name: categoryName });
     await category.save();
 
-    const subcategoryHotels = hotels.map(hotel => ({
-      ...hotel,
-      category: category._id,
-      subcategory: subcategoryName
-  
-    }));
-   const Hotels = await Hotel.insertMany(subcategoryHotels)
+    // Create subcategory and associated hotels
+    const subcategoryHotels = hotels.map(hotelData => {
+      return new Hotel({
+        category: category._id,
+        subcategory: subcategoryName,
+        ...hotelData
+      });
+    });
+    const createdHotels = await Hotel.insertMany(subcategoryHotels);
 
     res.status(201).json({
-            category: category,
-          subcategory: subcategoryName,
-        hotels: Hotels
-      });
+      category: category,
+      subcategory: subcategoryName,
+      hotels: createdHotels
+    });
   } catch (error) {
-    console.error('Error', error);
-    res.status(500).json({error: 'Error category, subcategory'})
+    console.error('Error creating category:', error);
+    res.status(500).json({ error: 'Error creating category' });
   }
 };
 
-exports.getAllCategories = async (req, res) => {
+exports.getAllCategoriesWithSubcategoriesAndHotels = async (req, res) => {
   try {
-    const categoriesWithHotels = await Categories.aggregate([
+    const categoriesWithSubcategoriesAndHotels = await Category.aggregate([
       {
         $lookup: {
-          from: 'hotels', // The name of the hotels collection
+          from: 'hotels',
           localField: '_id',
           foreignField: 'category',
           as: 'hotels'
@@ -61,8 +64,9 @@ exports.getAllCategories = async (req, res) => {
       }
     ]);
 
-    res.json(categoriesWithHotels);
+    res.json(categoriesWithSubcategoriesAndHotels);
   } catch (error) {
+    console.error('Error fetching data:', error);
     res.status(500).json({ error: 'Error fetching data' });
   }
 };

@@ -11,10 +11,11 @@ exports.create = async(req, res) => {
     const { name, phone, email, gstRegistrationNo, latitude, longitude } = req.body;
 
     const customer1signup = new Customer1SignupDB({
-        name: req.body.name,
-        phone: req.body.phone,
-        email: req.body.email,
-        gstRegistrationNo: req.body.gstRegistrationNo,
+        ShopName: req.body.shopName,
+        OwnerName: req.body.ownerName,
+        Phone: req.body.phone,
+        Email: req.body.email,
+        GstRegistrationNo: req.body.gstRegistrationNo,
         BbmpCertificateNo: req.body.BbmpCertificateNo,
         image: req.file&&req.file.filename ? req.protocol + "://" +req.get("host")+"/images/" + req.file.filename : "",
         location: {

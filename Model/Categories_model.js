@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 
 const categorySchema = new mongoose.Schema({
-  name: String,
-  hotels: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' }],
-  subcategroy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'subcategory' }]
-
-
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 });
 
-const Categories = mongoose.model('Categories', categorySchema);
+const Category = mongoose.model('Category', categorySchema);
 
-module.exports = Categories;
+module.exports = Category;
+

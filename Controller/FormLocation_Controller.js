@@ -1,5 +1,5 @@
 const FormLocation = require('../Model/FormLocation_model');
-const Category = require('../Model/Category_model');
+const Category = require('../Model/Categories_model');
 
 exports.createFormLocation = async (req, res) => {
   try {
