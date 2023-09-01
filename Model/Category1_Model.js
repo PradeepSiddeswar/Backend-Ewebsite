@@ -5,6 +5,7 @@ const offerSchema = new mongoose.Schema({
   enterPrice: String,
   enterOffer: String,
   image: String,
+  tagline: String
 });
 
 const category1Schema = new mongoose.Schema({

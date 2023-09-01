@@ -3,8 +3,8 @@ const Category1 = require('../Model/Category1_Model')
 
 exports.create = async (req, res) => {
     try {
-        const { name, offers, description } = req.body;
-        const category = new Category1({name, offers, description});
+        const { name, offers, description, tagline } = req.body;
+        const category = new Category1({name, offers, description, tagline});
         await category.save();
         res.status(201).json(category);
     } catch (error) {
