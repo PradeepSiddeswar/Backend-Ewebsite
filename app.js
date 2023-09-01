@@ -27,7 +27,7 @@ const CategoriesRoute = require("./Routes/Categories_Router")
 const FormLocationRoute = require("./Routes/FormLocation_Router")
 const distanceRoute = require('./Routes/Distance_router')
 const ImageRoute = require("./Routes/image_router")
-
+const Category1Route = require("./Routes/Category1_Router")
 
 
 
@@ -61,6 +61,7 @@ app.use("/api1", CategoriesRoute)
 app.use("/formLocation", FormLocationRoute)
 app.use('/distances', distanceRoute);
 app.use("/image", ImageRoute)
+app.use("/form", Category1Route)
 
 
 
