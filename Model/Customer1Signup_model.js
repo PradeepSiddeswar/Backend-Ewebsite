@@ -1,22 +1,22 @@
 const mongoose = require('mongoose');
 
 const Customer1SignupSchema = new mongoose.Schema({
-    ShopName : {
+    shopName : {
         type : String,
         required: true
     },
-    OwnerName: {
+    ownerName: {
         type: String,
-        required: true
+     required: true
     },
-    Phone: {
+    phone: {
         type : Number,
         required: true
     },
-    Email: {
+    email: {
         type: String,
     },
-    GstRegistrationNo: {
+    gstRegistrationNo: {
         type: Number,
     } ,
     BbmpCertificateNo:{
@@ -27,10 +27,6 @@ const Customer1SignupSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    location: {
-        type: { type: String, enum: ['Point'], default: 'Point'},
-        coordinates:[Number]
-    }
 });
 
 const Customer1SignupDB = mongoose.model('Customer1Signup', Customer1SignupSchema);

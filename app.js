@@ -57,7 +57,7 @@ app.use( express.static('path_to_image_directory'));
 app.use("/customersignup", CustomerSignupRoute)
 app.use("/customerLogin", Customer1SignupRoute )
 app.use("/add-cart", ProdectListRoute)
-app.use("/api", CategoriesRoute)
+app.use("/api1", CategoriesRoute)
 app.use("/formLocation", FormLocationRoute)
 app.use('/distances', distanceRoute);
 app.use("/image", ImageRoute)

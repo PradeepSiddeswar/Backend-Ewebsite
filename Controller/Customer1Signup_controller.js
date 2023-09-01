@@ -11,17 +11,13 @@ exports.create = async(req, res) => {
     const { name, phone, email, gstRegistrationNo, latitude, longitude } = req.body;
 
     const customer1signup = new Customer1SignupDB({
-        ShopName: req.body.shopName,
-        OwnerName: req.body.ownerName,
-        Phone: req.body.phone,
-        Email: req.body.email,
-        GstRegistrationNo: req.body.gstRegistrationNo,
+        shopName: req.body.shopName,
+        ownerName: req.body.ownerName,
+        phone: req.body.phone,
+        email: req.body.email,
+        gstRegistrationNo: req.body.gstRegistrationNo,
         BbmpCertificateNo: req.body.BbmpCertificateNo,
-        image: req.file&&req.file.filename ? req.protocol + "://" +req.get("host")+"/images/" + req.file.filename : "",
-        location: {
-            type: "Point",
-            coordinates: [parseFloat(longitude), parseFloat(latitude)]
-        }
+        image: req.file&&req.file.filename ? req.protocol + "://" +req.get("host")+"/images/" + req.file.filename : "", 
     })
     customer1signup.save(customer1signup)
                    .then(data => {
