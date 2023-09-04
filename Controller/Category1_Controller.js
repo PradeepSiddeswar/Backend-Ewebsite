@@ -24,10 +24,10 @@ exports.create = async(req, res) => {
 
     const category = new Category1({
         name: req.body.name,
-        offers: req.body.offers,
-        description: req.body.description,
-        tagline: req.body.tagline,
         selecteCategory: req.body.selectedCategory,
+        offers: req.body.offers,
+        // description: req.body.description,
+        tagline: req.body.tagline,
         image: req.file&&req.file.filename ? req.protocol + "://" +req.get("host")+"/images/" + req.file.filename : "", 
     })
     category.save(category)
