@@ -12,7 +12,7 @@ const category1Schema = new mongoose.Schema({
   name: String,
   description: String,
   selecteCategory: String,
-  image: String, // Added description field
+  // image: String, // Added description field
   offers: [offerSchema],
 });
 
