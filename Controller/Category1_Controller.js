@@ -27,7 +27,7 @@ exports.create = async(req, res) => {
         offers: req.body.offers,
         description: req.body.description,
         tagline: req.body.tagline,
-        selectedCategory: req.body.selectedCategory,
+        selecteCategory: req.body.selectedCategory,
         image: req.file&&req.file.filename ? req.protocol + "://" +req.get("host")+"/images/" + req.file.filename : "", 
     })
     category.save(category)

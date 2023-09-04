@@ -11,7 +11,8 @@ const offerSchema = new mongoose.Schema({
 const category1Schema = new mongoose.Schema({
   name: String,
   description: String,
-  selectedCategory: String, // Added description field
+  selecteCategory: String,
+  image: String, // Added description field
   offers: [offerSchema],
 });
 
