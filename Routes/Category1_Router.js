@@ -1,8 +1,10 @@
 const express = require('express');
-const route = express.Router();
+const router = express.Router();
 const categort1controller = require('../Controller/Category1_Controller')
+const imagemulter = require("../config/image_multer")
 
-route.post('/form', categort1controller.create)
-route.get('/get', categort1controller.getallCategories)
 
-module.exports = route
+router.post('/form', imagemulter.single("image"), categort1controller.create)
+router.get('/get', categort1controller.getallCategories)
+router.delete('/delete/:id',categort1controller.delete)
+module.exports = router

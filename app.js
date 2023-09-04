@@ -51,7 +51,6 @@ app.get("/", (req, res) => {
     res.send("Hello world")
 })
 
-
 app.use(express.static("upload"))
 app.use( express.static('path_to_image_directory'));
 app.use("/customersignup", CustomerSignupRoute)
