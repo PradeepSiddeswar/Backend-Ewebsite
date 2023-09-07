@@ -4,13 +4,14 @@ const offerSchema = new mongoose.Schema({
   name: String,
   enterPrice: String,
   enterOffer: String,
-  tagline: String
+  tagline: String,
+  image: String,
+
 });
 
 const category1Schema = new mongoose.Schema({
   name: String,
   selecteCategories: String,
-  image: String,
   offers: [offerSchema],
 });
 

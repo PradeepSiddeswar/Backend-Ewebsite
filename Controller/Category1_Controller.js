@@ -4,7 +4,7 @@ const Category1 = require('../Model/Category1_Model')
 exports.create = async (req, res) => {
     try {
         const { name, offers, selecteCategories } = req.body;
-        const image = req.file ? req.protocol + '://' + req.get('host') + '/upload/' + req.file.filename : '';
+        const image = req.file ? req.protocol + '://' + req.get('host') + '/images/' + req.file.filename : '';
 
         const category = new Category1({ name, offers, selecteCategories, image });
 
@@ -36,12 +36,11 @@ exports.create = async (req, res) => {
 //         return
 //     }
 //     const category = new Category1({
-//         // name: req.body.name,
-//         selecteCategory: req.body.selecteCategory,
+//         name: req.body.name,
+//         selecteCategories: req.body.selecteCategories,
 //         image: req.file&&req.file.filename ? req.protocol + "://" +req.get("host")+"/images/" + req.file.filename : "", 
 //         offers: req.body.offers,
-//         // description: req.body.description,
-//         tagline: req.body.tagline,
+
 //     })
 //     category.save(category)
 //                    .then(data => {
