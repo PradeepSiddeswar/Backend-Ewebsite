@@ -28,7 +28,7 @@ const FormLocationRoute = require("./Routes/FormLocation_Router")
 const distanceRoute = require('./Routes/Distance_router')
 const ImageRoute = require("./Routes/image_router")
 const Category1Route = require("./Routes/Category1_Router")
-
+const VideoRoute = require("./Routes/video_router")
 
 
 dotenv.config({ path: '.env'})
@@ -61,6 +61,7 @@ app.use("/formLocation", FormLocationRoute)
 app.use('/distances', distanceRoute);
 app.use("/image", ImageRoute)
 app.use("/form", Category1Route)
+app.use("/video", VideoRoute)
 
 
 
