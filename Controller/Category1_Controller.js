@@ -79,3 +79,21 @@ exports.delete = (req, res) => {
             res.status(500).send(error)
         })
 }
+
+
+exports.getItemById = async (req, res) => {
+    try {
+      const itemId = req.params.id;
+      const item = await Category1.findById(itemId);
+  
+      if (!item) {
+        return res.status(404).json({ message: "Item not found" });
+      }
+  
+      res.json(item);
+    } catch (error) {
+      console.error("Error fetching item:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  };
+  

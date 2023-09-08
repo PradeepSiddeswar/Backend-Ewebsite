@@ -1,9 +1,11 @@
-// models/video.js
 const mongoose = require('mongoose');
 
-const videoSchema = new mongoose.Schema({
-  
+const youtubSchema = new mongoose.Schema({
   videoUrl: String,
+});
+
+const videoSchema = new mongoose.Schema({
+  Youtubvideo: [youtubSchema],
 });
 
 module.exports = mongoose.model('Video', videoSchema);

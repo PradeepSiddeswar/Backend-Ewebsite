@@ -1,28 +1,48 @@
 const Video = require("../Model/Video_Model")
 
-
-exports.uploadVideo = async (req, res) => {
+exports.createVideo = async (req, res) => {
     try {
-      const {  videoUrl } = req.body;
-  
-      // Create a new video document with the provided data
-      const video = new Video({  videoUrl });
+      // Create a new video
+      const newVideo = new Video({
+        Youtubvideo: req.body.Youtubvideo // Assuming you're sending the video URL in the request body
+      });
   
       // Save the video to the database
-      await video.save();
+      const savedVideo = await newVideo.save();
   
-      res.status(201).json(video);
+      // Send a response with the newly created video
+      res.status(201).json(savedVideo);
     } catch (error) {
-      console.error(error); // Log the error for debugging
-      res.status(500).json({ error: 'Internal Server Error' });
+      // Handle any errors
+      res.status(500).json({ error: 'Could not create video' });
     }
   };
   
+  // Controller function to get all videos
   exports.getAllVideos = async (req, res) => {
     try {
-      const videos = await Video.find();
-      res.json(videos);
+      // Fetch all videos from the database
+      const allVideos = await Video.find();
+  
+      // Send the list of videos as a JSON response
+      res.status(200).json(allVideos);
     } catch (error) {
-      res.status(500).json({ error: 'Internal Server Error' });
+      // Handle any errors
+      res.status(500).json({ error: 'Could not retrieve videos' });
     }
   };
+
+  exports.delete = (req, res) => {
+    const id = req.params.id
+    Video.findByIdAndDelete(id)
+        .then(data => {
+            if (!data) {
+                res.status(400).send(`category not found with ${id}`)
+            } else {
+                res.send("category deleted successfully")
+            }
+        })
+        .catch(error => {
+            res.status(500).send(error)
+        })
+}

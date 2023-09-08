@@ -7,9 +7,6 @@ exports.create = async(req, res) => {
         res.status(400).send("Content Connt Be Empty")
         return
     }
-
-    const { name, phone, email, gstRegistrationNo, latitude, longitude } = req.body;
-
     const customer1signup = new Customer1SignupDB({
         shopName: req.body.shopName,
         ownerName: req.body.ownerName,
@@ -28,4 +25,23 @@ exports.create = async(req, res) => {
                         message: error
                     })
                    })
+}
+
+
+
+// delete method
+
+exports.delete = (req, res) => {
+    const id = req.params.id
+    Customer1SignupDB.findByIdAndDelete(id)
+        .then(data => {
+            if (!data) {
+                res.status(400).send(`category not found with ${id}`)
+            } else {
+                res.send("category deleted successfully")
+            }
+        })
+        .catch(error => {
+            res.status(500).send(error)
+        })
 }
