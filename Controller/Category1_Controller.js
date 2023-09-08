@@ -6,7 +6,10 @@ exports.create = async (req, res) => {
         const { name, offers, selecteCategories, selectProduct } = req.body;
         const image = req.file ? req.protocol + '://' + req.get('host') + '/images/' + req.file.filename : '';
 
-        const category = new Category1({ name, offers, selecteCategories, image , selectProduct});
+
+        const selectedProducts = Array.isArray(selectProduct) ? selectProduct : [selectProduct];
+
+        const category = new Category1({ name, offers, selecteCategories, image , image, selectProduct: selectedProducts});
 
         await category.save();
 
@@ -18,6 +21,7 @@ exports.create = async (req, res) => {
             selectProduct: category.selectProduct,
             image: category.image, // Include the image path
             offers: category.offers,
+            Image: category.Image,
             __v: category.__v
         };
 
