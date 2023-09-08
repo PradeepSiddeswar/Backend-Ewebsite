@@ -3,10 +3,10 @@ const Category1 = require('../Model/Category1_Model')
 
 exports.create = async (req, res) => {
     try {
-        const { name, offers, selecteCategories } = req.body;
+        const { name, offers, selecteCategories, selectProduct } = req.body;
         const image = req.file ? req.protocol + '://' + req.get('host') + '/images/' + req.file.filename : '';
 
-        const category = new Category1({ name, offers, selecteCategories, image });
+        const category = new Category1({ name, offers, selecteCategories, image , selectProduct});
 
         await category.save();
 
@@ -15,6 +15,7 @@ exports.create = async (req, res) => {
             _id: category._id,
             name: category.name,
             selecteCategories: category.selecteCategories,
+            selectProduct: category.selectProduct,
             image: category.image, // Include the image path
             offers: category.offers,
             __v: category.__v

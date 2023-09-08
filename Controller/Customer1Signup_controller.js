@@ -26,11 +26,39 @@ exports.create = async(req, res) => {
                     })
                    })
 }
+// getall
 
+exports.get =  (req, res) => {
+    console.log(req.query,"user")
+    Customer1SignupDB.find({user_id:req.query.user_id})
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(error => {
+            res.status(500).json(error)
+        })
+}
 
+// update id 
+exports.update = async (req, res) => {
+    if (!req.body) {
+        res.status(400).send("User Address not found")
+    }
+    const id = req.params.id
+    Customer1SignupDB.findByIdAndUpdate(id, req.body, { new: true })
+        .then(data => {
+            if (!data) {
+                res.status(400).send(`Can not found user Address with ${id}`)
+            } else {
+                res.send(data)
+            }
+        })
+        .catch(error => {
+            res.status(500).send(error)
+        })
+}
 
 // delete method
-
 exports.delete = (req, res) => {
     const id = req.params.id
     Customer1SignupDB.findByIdAndDelete(id)
