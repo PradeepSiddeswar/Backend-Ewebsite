@@ -9,7 +9,19 @@ exports.create = async (req, res) => {
 
         const selectedProducts = Array.isArray(selectProduct) ? selectProduct : [selectProduct];
 
-        const category = new Category1({ name, offers, selecteCategories, image , image, selectProduct: selectedProducts});
+        // const category = new Category1({ name, offers, selecteCategories, image , image, selectProduct: selectedProducts})
+      // Filter out any empty selectedCategories and selectedProducts
+    //   const filteredSelectedCategories = selectedCategories.filter(category => !!category);
+      const filteredSelectedProducts = selectedProducts.filter(product => !!product);
+
+      const category = new Category1({
+          name,
+          offers,
+          selecteCategories: selecteCategories,
+          image,
+          selectProduct: filteredSelectedProducts
+      });
+
 
         await category.save();
 
@@ -60,15 +72,40 @@ exports.create = async (req, res) => {
 
 
 
+// exports.getallCategories = async (req, res) => {
+//     try { 
+//         const categories = await Category1.find();
+//         res.status(200).json(categories);
+//     } catch (error) {
+//         console.error('Error retrieving categories:', error);
+//         res.status(500).json({ error: 'Error retrieving categories'})
+//     }
+// };
+
 exports.getallCategories = async (req, res) => {
-    try { 
-        const categories = await Category1.find();
+    try {
+        // Get the value of the 'selectProduct' query parameter from the request
+        const selectProduct = req.query.selectProduct;
+
+        // Define your filter criteria based on the 'selectProduct' value
+        let filter = {};
+
+        if (selectProduct && selectProduct.length > 0) {
+            // If 'selectProduct' is not empty, filter based on it
+            filter = {
+                selectProduct: { $in: selectProduct } // Use $in to filter categories that match any value in the 'selectProduct' array
+            };
+        }
+
+        const categories = await Category1.find(filter);
+
         res.status(200).json(categories);
     } catch (error) {
-        console.error('Error retrieving categories:', error);
-        res.status(500).json({ error: 'Error retrieving categories'})
+        console.error('Error retrieving categories by selectProduct:', error);
+        res.status(500).json({ error: 'Error retrieving categories by selectProduct' });
     }
 };
+
 
 exports.delete = (req, res) => {
     const id = req.params.id
