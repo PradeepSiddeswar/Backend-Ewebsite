@@ -1,4 +1,5 @@
 const Category1 = require('../Model/Category1_Model')
+const mongoose = require('mongoose');
 
 
 exports.create = async (req, res) => {
@@ -19,7 +20,7 @@ exports.create = async (req, res) => {
           offers,
           selecteCategories: selecteCategories,
           image,
-          selectProduct: filteredSelectedProducts
+          selectProduct: filteredSelectedProducts,
       });
 
 
@@ -44,43 +45,7 @@ exports.create = async (req, res) => {
     }
 };
 
-
-// exports.create = async(req, res) => {
-//     console.log(req.body);
-//     console.log(req.protocol + "://" + req.get("host"), "url")
-//     if(!req.body) {
-//         res.status(400).send("Content Connt Be Empty")
-//         return
-//     }
-//     const category = new Category1({
-//         name: req.body.name,
-//         selecteCategories: req.body.selecteCategories,
-//         image: req.file&&req.file.filename ? req.protocol + "://" +req.get("host")+"/images/" + req.file.filename : "", 
-//         offers: req.body.offers,
-
-//     })
-//     category.save(category)
-//                    .then(data => {
-//                     res.status(200).send(data)
-//                    })
-//                    .catch(error => {
-//                     res.status(500).send({
-//                         message: error
-//                     })
-//                    })
-// }
-
-
-
-// exports.getallCategories = async (req, res) => {
-//     try { 
-//         const categories = await Category1.find();
-//         res.status(200).json(categories);
-//     } catch (error) {
-//         console.error('Error retrieving categories:', error);
-//         res.status(500).json({ error: 'Error retrieving categories'})
-//     }
-// };
+ 
 
 exports.getallCategories = async (req, res) => {
     try {
@@ -126,6 +91,13 @@ exports.delete = (req, res) => {
 exports.getItemById = async (req, res) => {
     try {
       const itemId = req.params.id;
+  
+      // Validate if itemId is a valid ObjectId
+      if (!mongoose.Types.ObjectId.isValid(itemId)) {
+        console.error('Invalid Item ID');
+        return res.status(400).json({ message: "Invalid Item ID" });
+      }
+  
       const item = await Category1.findById(itemId);
   
       if (!item) {
