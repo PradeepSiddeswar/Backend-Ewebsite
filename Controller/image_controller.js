@@ -1,65 +1,42 @@
 const ImageDB = require('../Model/image_model');
 
-exports.create = async(req, res) => {
-    console.log(req.body);
-    console.log(req.protocol + "://" + req.get("host"), "url")
-    if(!req.body) {
-        res.status(400).send("Content Connt Be Empty")
-        return
-    }
-
-
-
-    const image = new ImageDB({
-        title: req.body.title,
-        image: req.file&&req.file.filename ? req.protocol + "://" +req.get("host")+"/images/" + req.file.filename : "",
-    })
-    image.save(image)
-                   .then(data => {
-                    res.status(200).send(data)
-                   })
-                   .catch(error => {
-                    res.status(500).send({
-                        message: error
-                    })
-                   })
-}
-
-// find user 
-    exports.find = (req, res) => {
-      if (req.params.title) {
-          const title = req.params.title
-          ImageDB.findOne({ title: title }
-          ).then(data => {
-              if (!data) {
-                  res.status(400).send("User not found")
-              } else {
-                  res.send(data)
-              }
-          })
-              .catch(err => {
-                  res.status(500).send(err)
-              })
-      }
-      else
-          ImageDB.find()
-              .then(user => {
-                  res.send(user)
-              })
-              .catch(err => {
-                  res.status(500).send(err)
-              })
-  }   
-
-
-
-  exports.getAllCategory = async (req, res) => {
+exports.createImages = async (req, res) => {
     try {
-      const category = await ImageDB.find();
-      res.json({ category });
+      const { imageUrl, title } = req.body;
+      
+      // Assuming you are using Multer for file uploads
+      const imagePath = req.file ? req.protocol + "://" + req.get("host") + "/images/" + req.file.filename : "";
+  
+      const image = new ImageDB({ imageUrl, title, imagePath });
+      await image.save(); // Save the 'image' object
+      res.json({ message: 'Image created successfully', data: image });
     } catch (error) {
-      console.error('Error fetching hotels:', error);
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ message: 'Internal server error', error });
+    }
+  };
+
+
+exports.getImages = async (req, res) => {
+    try {
+      const images = await ImageDB.find();
+      res.json({ message: 'Success', data: { WebsiteImages: images } });
+    } catch (error) {
+      res.status(500).json({ message: 'Internal server error', error });
     }
   };
   
+  
+  exports.delete = (req, res) => {
+    const id = req.params.id
+    ImageDB.findByIdAndDelete(id)
+        .then(data => {
+            if (!data) {
+                res.status(400).send(`category not found with ${id}`)
+            } else {
+                res.send("category deleted successfully")
+            }
+        })
+        .catch(error => {
+            res.status(500).send(error)
+        })
+  }

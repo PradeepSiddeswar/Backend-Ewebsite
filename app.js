@@ -29,6 +29,9 @@ const distanceRoute = require('./Routes/Distance_router')
 const ImageRoute = require("./Routes/image_router")
 const Category1Route = require("./Routes/Category1_Router")
 const VideoRoute = require("./Routes/video_router")
+const otpRoute = require("./Routes/Otp_router")
+const smsRoute = require("./Routes/Sms_router")
+
 
 
 dotenv.config({ path: '.env'})
@@ -62,8 +65,8 @@ app.use('/distances', distanceRoute);
 app.use("/image", ImageRoute)
 app.use("/form", Category1Route)
 app.use("/video", VideoRoute)
-
-
+app.use('/otp', otpRoute);
+app.use('/smsOtp', smsRoute )
 
 
 

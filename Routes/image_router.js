@@ -3,8 +3,8 @@ const route = express.Router()
 const imagemulter = require("../config/image_multer")
 const imagecontroller = require("../Controller/image_controller")
 
-route.post("/", imagemulter.single("image"), imagecontroller.create)
-route.get("/get", imagecontroller.find)
-route.get("/category", imagecontroller.getAllCategory)
+route.post("/images", imagemulter.single("image"), imagecontroller.createImages)
+route.get("/get", imagecontroller.getImages)
+route.delete('/delete/:id',imagecontroller.delete)
 
 module.exports = route

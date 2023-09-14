@@ -2,7 +2,8 @@ const Video = require('../Model/Video_Model');
 
 exports.createVideo = async (req, res) => {
   try {
-    const video = new Video(req.body);
+    const {videoUrl, name, Min } = req.body;
+    const video = new Video({videoUrl, name, Min});
     await video.save();
     res.json({ message: 'Video created successfully', data: video });
   } catch (error) {
