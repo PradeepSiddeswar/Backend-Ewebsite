@@ -31,7 +31,9 @@ const Category1Route = require("./Routes/Category1_Router")
 const VideoRoute = require("./Routes/video_router")
 const otpRoute = require("./Routes/Otp_router")
 const smsRoute = require("./Routes/Sms_router")
-
+const LoginInRoute = require("./Routes/LoginIn_Router")
+const SignUpRoute = require("./Routes/SignUp_Router")
+// const userlocationRoute = require("./Routes/UserLaction_Router")
 
 
 dotenv.config({ path: '.env'})
@@ -67,7 +69,9 @@ app.use("/form", Category1Route)
 app.use("/video", VideoRoute)
 app.use('/otp', otpRoute);
 app.use('/smsOtp', smsRoute )
-
+app.use('/login', LoginInRoute)
+app.use('/signup', SignUpRoute)
+// app.use('/userLocation', userlocationRoute) waste
 
 
 
