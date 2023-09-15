@@ -33,7 +33,7 @@ const otpRoute = require("./Routes/Otp_router")
 const smsRoute = require("./Routes/Sms_router")
 const LoginInRoute = require("./Routes/LoginIn_Router")
 const SignUpRoute = require("./Routes/SignUp_Router")
-// const userlocationRoute = require("./Routes/UserLaction_Router")
+const userlocationRoute = require("./Routes/UserLaction_Router")
 
 
 dotenv.config({ path: '.env'})
@@ -71,7 +71,7 @@ app.use('/otp', otpRoute);
 app.use('/smsOtp', smsRoute )
 app.use('/login', LoginInRoute)
 app.use('/signup', SignUpRoute)
-// app.use('/userLocation', userlocationRoute) waste
+app.use('/userLocation', userlocationRoute) 
 
 
 

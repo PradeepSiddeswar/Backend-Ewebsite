@@ -1,31 +1,22 @@
 const mongoose = require('mongoose');
 
 const UserLocationSchema = new mongoose.Schema({
-    latitude : {
-        type : Number,
+   
+    address: {
+        type: String,
         required: true
     },
-    longitude: {
-        type: Number,
-     required: true
-    },
-    Name: {
-        type : String,
+    City: {
+        type: String,
         required: true
-    },
-    addressLine1: {
-        type: String,
-    },
-    addressLine2: {
-        type: String,
     } ,
-    state:{
+    StreetAddress:{
         type: String,
         required: true
     },
-    postCode: {
+    PostalCode: {
         type: Number,
-        required: true
+        // PostalCode is optional, so we don't set it as required
     },
 });
 

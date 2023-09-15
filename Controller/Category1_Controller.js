@@ -7,6 +7,8 @@ exports.create = async (req, res) => {
         const { name, offers, selecteCategories, selectProduct } = req.body;
         const image = req.file ? req.protocol + '://' + req.get('host') + '/images/' + req.file.filename : '';
 
+       const defaultName = 'Default shop Name';
+       const defaultImage = 'default.jpg';
 
         const selectedProducts = Array.isArray(selectProduct) ? selectProduct : [selectProduct];
 
@@ -16,10 +18,10 @@ exports.create = async (req, res) => {
       const filteredSelectedProducts = selectedProducts.filter(product => !!product);
 
       const category = new Category1({
-          name,
+          name: name || defaultName,
+          image: image || defaultImage,
           offers,
           selecteCategories: selecteCategories,
-          image,
           selectProduct: filteredSelectedProducts,
       });
 
@@ -35,7 +37,6 @@ exports.create = async (req, res) => {
             image: category.image, // Include the image path
             offers: category.offers,
             Image: category.Image,
-            __v: category.__v
         };
 
         res.status(201).json(responseData);

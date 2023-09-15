@@ -10,7 +10,14 @@ const offerSchema = new mongoose.Schema({
 });
 
 const category1Schema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    default: 'Default shop Name',
+  },
+  image : {
+    type: String,
+    default: 'default.jpg',
+  },
   selecteCategories: String,
   selectProduct: [{ type: String }], 
   offers: [offerSchema],
