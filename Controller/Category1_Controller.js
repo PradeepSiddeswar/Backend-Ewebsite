@@ -5,10 +5,11 @@ const mongoose = require('mongoose');
 exports.create = async (req, res) => {
     try {
         const { name, offers, selecteCategories, selectProduct } = req.body;
-        const image = req.file ? req.protocol + '://' + req.get('host') + '/images/' + req.file.filename : '';
+        
+        const image = (req.body.image && req.body.image.trim() !== '') ? req.body.image : 'default.jpg';
 
        const defaultName = 'Default shop Name';
-       const defaultImage = 'default.jpg';
+    //    const defaultImage = 'default.jpg';
 
         const selectedProducts = Array.isArray(selectProduct) ? selectProduct : [selectProduct];
 
@@ -19,7 +20,7 @@ exports.create = async (req, res) => {
 
       const category = new Category1({
           name: name || defaultName,
-          image: image || defaultImage,
+          image : image,
           offers,
           selecteCategories: selecteCategories,
           selectProduct: filteredSelectedProducts,
@@ -36,7 +37,6 @@ exports.create = async (req, res) => {
             selectProduct: category.selectProduct,
             image: category.image, // Include the image path
             offers: category.offers,
-            Image: category.Image,
         };
 
         res.status(201).json(responseData);

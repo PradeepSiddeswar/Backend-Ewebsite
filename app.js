@@ -34,12 +34,16 @@ const smsRoute = require("./Routes/Sms_router")
 const LoginInRoute = require("./Routes/LoginIn_Router")
 const SignUpRoute = require("./Routes/SignUp_Router")
 const userlocationRoute = require("./Routes/UserLaction_Router")
-
+const SMS1Route = require("./Routes/SMS1_Router")
+const TextsmsRoute = require("./Routes/Textsms_Router")
+const TotalPaymentRoute = require("./Routes/TotalPayment_Router")
+const ItemRoute =require("./Routes/Items_Router")
 
 dotenv.config({ path: '.env'})
 const PORT = process.env.PORT || 8080
 console.log("Server Started", PORT)
 const mongoose = require("mongoose");
+const TotalPayment_Model = require("./Model/TotalPayment_Model")
 mongoose.pluralize(null)
 
 mongoose.connect(process.env.MONGO_URL, {
@@ -67,11 +71,14 @@ app.use('/distances', distanceRoute);
 app.use("/image", ImageRoute)
 app.use("/form", Category1Route)
 app.use("/video", VideoRoute)
-app.use('/otp', otpRoute);
-app.use('/smsOtp', smsRoute )
+app.use('/userLocation', userlocationRoute) 
 app.use('/login', LoginInRoute)
 app.use('/signup', SignUpRoute)
-app.use('/userLocation', userlocationRoute) 
-
+app.use('/otp', otpRoute);
+app.use('/smsOtp', smsRoute )
+app.use('/message', SMS1Route)
+app.use('/sendSMS', TextsmsRoute)
+app.use('/api', TotalPaymentRoute)
+app.use('/item', ItemRoute)
 
 
