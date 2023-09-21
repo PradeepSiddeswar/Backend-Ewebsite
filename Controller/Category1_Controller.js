@@ -1,33 +1,34 @@
 const Category1 = require('../Model/Category1_Model')
 const mongoose = require('mongoose');
 
-
 exports.create = async (req, res) => {
     try {
-        const { name, offers, selecteCategories, selectProduct } = req.body;
-        
+        const { name, offers, selecteCategories, selectProduct, latitude, longitude } = req.body;
+
         const image = (req.body.image && req.body.image.trim() !== '') ? req.body.image : 'default.jpg';
 
-       const defaultName = 'Default shop Name';
-    //    const defaultImage = 'default.jpg';
+        const defaultName = 'Default shop Name';
 
         const selectedProducts = Array.isArray(selectProduct) ? selectProduct : [selectProduct];
 
-        // const category = new Category1({ name, offers, selecteCategories, image , image, selectProduct: selectedProducts})
-      // Filter out any empty selectedCategories and selectedProducts
-    //   const filteredSelectedCategories = selectedCategories.filter(category => !!category);
-      const filteredSelectedProducts = selectedProducts.filter(product => !!product);
+        // Filter out any empty selectedProducts
+        const filteredSelectedProducts = selectedProducts.filter(product => !!product);
 
-      const category = new Category1({
-          name: name || defaultName,
-          image : image,
-          offers,
-          selecteCategories: selecteCategories,
-          selectProduct: filteredSelectedProducts,
-      });
-
+        const category = new Category1({
+            name: name || defaultName,
+            image: image,
+            offers,
+            selecteCategories: selecteCategories,
+            selectProduct: filteredSelectedProducts,
+        });
 
         await category.save();
+
+        // Define the default Location object using provided or default values
+        const defaultLocation = {
+            latitude: latitude || 37.7749, // Default latitude (e.g., 37.7749)
+            longitude: longitude || -122.4194, // Default longitude (e.g., -122.4194)
+        };
 
         // Include the image path in the response
         const responseData = {
@@ -37,6 +38,7 @@ exports.create = async (req, res) => {
             selectProduct: category.selectProduct,
             image: category.image, // Include the image path
             offers: category.offers,
+            defaultLocation: defaultLocation,
         };
 
         res.status(201).json(responseData);
@@ -45,6 +47,7 @@ exports.create = async (req, res) => {
         res.status(500).json({ error: 'Error creating category' });
     }
 };
+
 
  
 
