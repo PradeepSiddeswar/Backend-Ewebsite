@@ -50,7 +50,6 @@ exports.create = async (req, res) => {
 
 
  
-
 exports.getallCategories = async (req, res) => {
     try {
         // Get the value of the 'selectProduct' query parameter from the request
@@ -66,9 +65,32 @@ exports.getallCategories = async (req, res) => {
             };
         }
 
+        // Query the database to retrieve categories
         const categories = await Category1.find(filter);
 
-        res.status(200).json(categories);
+        // Define default values
+        const defaultName = 'Default Category Name';
+        const defaultImage = 'default.jpg';
+        const defaultLocation = {
+            latitude: 37.7749, // Default latitude
+            longitude: -122.4194, // Default longitude
+        };
+
+        // Map the retrieved data and apply default values where needed
+        const responseData = categories.map(category => ({
+            _id: category._id,
+            name: category.name || defaultName,
+            image: category.image || defaultImage,
+            offers: category.offers,
+            selecteCategories: category.selecteCategories,
+            selectProduct: category.selectProduct,
+            defaultLocation: category.latitude && category.longitude ? {
+                latitude: category.latitude,
+                longitude: category.longitude,
+            } : defaultLocation,
+        }));
+
+        res.status(200).json(responseData);
     } catch (error) {
         console.error('Error retrieving categories by selectProduct:', error);
         res.status(500).json({ error: 'Error retrieving categories by selectProduct' });
