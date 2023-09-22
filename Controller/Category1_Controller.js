@@ -39,6 +39,7 @@ exports.create = async (req, res) => {
             selectProduct: category.selectProduct,
             image: category.image, // Include the image path
             offers: category.offers,
+            
             defaultLocation: defaultLocation,
         };
 
@@ -81,8 +82,9 @@ exports.getallCategories = async (req, res) => {
         const responseData = categories.map(category => ({
             _id: category._id,
             name: category.name || defaultName,
-            image: generateImagePath(category.name || defaultName), // Generate image path based on category name
+            image: category.image || generateImagePath(category.name || defaultName), // Generate image path based on category name
             offers: category.offers,
+            image: category.image,
             selecteCategories: category.selecteCategories,
             selectProduct: category.selectProduct,
             defaultLocation: category.latitude && category.longitude ? {
@@ -97,7 +99,6 @@ exports.getallCategories = async (req, res) => {
         res.status(500).json({ error: 'Error retrieving categories by selectProduct' });
     }
 };
-
 
 
 exports.delete = (req, res) => {
