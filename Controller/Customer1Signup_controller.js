@@ -14,7 +14,8 @@ exports.create = async(req, res) => {
         email: req.body.email,
         gstRegistrationNo: req.body.gstRegistrationNo,
         BbmpCertificateNo: req.body.BbmpCertificateNo,
-        image: req.file&&req.file.filename ? req.protocol + "://" +req.get("host")+"/images/" + req.file.filename : "", 
+        image: req.file&&req.file.filename ? req.protocol + "://" +req.get("host")+"/images/" + req.file.filename : "",
+        locationInfo: req.body.locationInfo, 
     })
     customer1signup.save(customer1signup)
                    .then(data => {

@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 
 exports.create = async (req, res) => {
     try {
-        const { name, offers, selecteCategories, selectProduct, latitude, longitude } = req.body;
+        const { name, offers, selecteCategories, selectProduct, latitude, longitude , } = req.body;
 
-        const image = (req.body.image && req.body.image.trim() !== '') ? req.body.image : 'default.jpg';
+        const image = (req.body.image && req.body.image.trim() !== '') ? req.body.image
+         : generateImagePath(name ||defaultName);
 
         const defaultName = 'Default shop Name';
 

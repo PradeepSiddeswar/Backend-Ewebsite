@@ -27,6 +27,7 @@ const Customer1SignupSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    locationInfo: String,
 });
 
 const Customer1SignupDB = mongoose.model('Customer1Signup', Customer1SignupSchema);
