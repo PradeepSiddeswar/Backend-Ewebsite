@@ -81,7 +81,7 @@ exports.getallCategories = async (req, res) => {
         const responseData = categories.map(category => ({
             _id: category._id,
             name: category.name || defaultName,
-            image: category.image || defaultImage,
+            image: generateImagePath(category.name || defaultName), // Generate image path based on category name
             offers: category.offers,
             selecteCategories: category.selecteCategories,
             selectProduct: category.selectProduct,
@@ -97,6 +97,7 @@ exports.getallCategories = async (req, res) => {
         res.status(500).json({ error: 'Error retrieving categories by selectProduct' });
     }
 };
+
 
 
 exports.delete = (req, res) => {
