@@ -39,7 +39,7 @@ const TextsmsRoute = require("./Routes/Textsms_Router")
 const TotalPaymentRoute = require("./Routes/TotalPayment_Router")
 const ItemRoute =require("./Routes/Items_Router")
 const CricketRoute = require("./Routes/Cricket_Router")
-
+const NavbarRoute = require("./Routes/Navbar_Router")
 
 
 dotenv.config({ path: '.env'})
@@ -84,4 +84,4 @@ app.use('/sendSMS', TextsmsRoute)
 app.use('/api', TotalPaymentRoute)
 app.use('/item', ItemRoute)
 app.use('/api/cricket', CricketRoute)
-
+app.use('/navbar', NavbarRoute)
