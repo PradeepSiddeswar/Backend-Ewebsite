@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 exports.create = async (req, res) => {
     try {
-        const { name, offers, selecteCategories, selectProduct, latitude, longitude , } = req.body;
+        const { name, offers, selecteCategories, selectProduct,  locationInfo } = req.body;
 
         const image = (req.body.image && req.body.image.trim() !== '') ? req.body.image
          : generateImagePath(name ||defaultName);
@@ -18,6 +18,7 @@ exports.create = async (req, res) => {
         const category = new Category1({
             name: name || defaultName,
             image: image,
+            locationInfo,
             offers,
             selecteCategories: selecteCategories,
             selectProduct: filteredSelectedProducts,
@@ -25,22 +26,17 @@ exports.create = async (req, res) => {
 
         await category.save();
 
-        // Define the default Location object using provided or default values
-        const defaultLocation = {
-            latitude: latitude || 37.7749, // Default latitude (e.g., 37.7749)
-            longitude: longitude || -122.4194, // Default longitude (e.g., -122.4194)
-        };
+      
 
         // Include the image path in the response
-        const responseData = {
+         responseData = {
             _id: category._id,
             name: category.name,
             selecteCategories: category.selecteCategories,
             selectProduct: category.selectProduct,
             image: category.image, // Include the image path
             offers: category.offers,
-            
-            defaultLocation: defaultLocation,
+            locationInfo: category.locationInfo, // Place locationInfo here
         };
 
         res.status(201).json(responseData);
@@ -73,24 +69,18 @@ exports.getallCategories = async (req, res) => {
         // Define default values
         const defaultName = 'Default Category Name';
         const defaultImage = 'default.jpg';
-        const defaultLocation = {
-            latitude: 37.7749, // Default latitude
-            longitude: -122.4194, // Default longitude
-        };
+        
 
         // Map the retrieved data and apply default values where needed
         const responseData = categories.map(category => ({
             _id: category._id,
             name: category.name || defaultName,
             image: category.image || generateImagePath(category.name || defaultName), // Generate image path based on category name
+            locationInfo: category.locationInfo,
             offers: category.offers,
             image: category.image,
             selecteCategories: category.selecteCategories,
             selectProduct: category.selectProduct,
-            defaultLocation: category.latitude && category.longitude ? {
-                latitude: category.latitude,
-                longitude: category.longitude,
-            } : defaultLocation,
         }));
 
         res.status(200).json(responseData);

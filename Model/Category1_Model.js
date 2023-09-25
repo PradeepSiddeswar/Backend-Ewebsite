@@ -18,15 +18,8 @@ const category1Schema = new mongoose.Schema({
     type: String,
     default: 'default.jpg',
   },
-  defaultLocation: {
-    latitude: {
-      type: Number,
-      default: 37.7749,
-    },
-    longitude: {
-      type: Number,
-      default: -122.4194,
-    }
+  locationInfo: {
+    type :String
   },
   selecteCategories: String,
   selectProduct: [{ type: String }], 
