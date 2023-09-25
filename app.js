@@ -38,9 +38,9 @@ const SMS1Route = require("./Routes/SMS1_Router")
 const TextsmsRoute = require("./Routes/Textsms_Router")
 const TotalPaymentRoute = require("./Routes/TotalPayment_Router")
 const ItemRoute =require("./Routes/Items_Router")
-const CricketRoute = require("./Routes/Cricket_Router")
+const CricketScoreRoute = require("./Routes/CricketScore_Router")
 const NavbarRoute = require("./Routes/Navbar_Router")
-
+const specialistsRoute = require("./Routes/Specialist_Router")
 
 dotenv.config({ path: '.env'})
 const PORT = process.env.PORT || 8080
@@ -83,5 +83,6 @@ app.use('/message', SMS1Route)
 app.use('/sendSMS', TextsmsRoute)
 app.use('/api', TotalPaymentRoute)
 app.use('/item', ItemRoute)
-app.use('/api/cricket', CricketRoute)
+app.use('/api', CricketScoreRoute)
 app.use('/navbar', NavbarRoute)
+app.use("/specialists", specialistsRoute);
