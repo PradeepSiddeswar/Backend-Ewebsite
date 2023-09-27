@@ -1,6 +1,6 @@
 const multer = require("multer")
 const path = require("path")
-const express = require("express")
+const express = require("express");
 
 const fileStorageEngine = multer.diskStorage({
     
@@ -14,5 +14,10 @@ const fileStorageEngine = multer.diskStorage({
 const upload = multer({
     storage: fileStorageEngine
 });
+// const uploadMultiple = upload.fields([
+//     { name: 'profileImage1', maxCount: 1 },
+//     { name: 'profileImage2', maxCount: 1 },
+//   ]);
 
-module.exports = upload
+// module.exports = uploadMultiple
+ module.exports = upload

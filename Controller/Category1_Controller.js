@@ -26,7 +26,7 @@ exports.create = async (req, res) => {
 
         await category.save();
 
-      
+
 
         // Include the image path in the response
          responseData = {
@@ -47,7 +47,59 @@ exports.create = async (req, res) => {
 };
 
 
- 
+// exports.create = async (req, res) => {
+//     try {
+//         const { name, offers, selecteCategories, selectProduct, locationInfo } = req.body;
+
+//         const defaultName = 'Default shop Name';
+//         const selectedProducts = Array.isArray(selectProduct) ? selectProduct : [selectProduct];
+//         const filteredSelectedProducts = selectedProducts.filter(product => !!product);
+
+//         const category = new Category1({
+//             name: name || defaultName,
+//             image1: req.files['profileImage1'][0]
+//                 ? req.protocol + "://" + req.get("host") + "/images/" + req.files['profileImage1'][0].filename
+//                 : "",
+//             image2: req.files['profileImage2'][0]
+//                 ? req.protocol + "://" + req.get("host") + "/images/" + req.files['profileImage2'][0].filename
+//                 : "",
+//             image3: req.files['profileImage2'][0]
+//                 ? req.protocol + "://" + req.get("host") + "/images/" + req.files['profileImage2'][0].filename
+//                 : "",
+//             locationInfo,
+//             offers,
+//             selecteCategories: selecteCategories,
+//             selectProduct: filteredSelectedProducts,
+//         });
+
+//         await category.save();
+//         const responseData = {
+//             _id: category._id,
+//             name: category.name,
+//             image1: req.files['profileImage1'][0]
+//                 ? req.protocol + "://" + req.get("host") + "/images/" + req.files['profileImage1'][0].filename
+//                 : "",
+//             image2: req.files['profileImage2'][0]
+//                 ? req.protocol + "://" + req.get("host") + "/images/" + req.files['profileImage2'][0].filename
+//                 : "",
+//             image3: req.files['profileImage3'][0]
+//                 ? req.protocol + "://" + req.get("host") + "/images/" + req.files['profileImage3'][0].filename
+//                 : "",
+//             locationInfo: category.locationInfo,
+//             offers: category.offers,
+//             selecteCategories: category.selecteCategories,
+//             selectProduct: category.selectProduct,
+//         };
+        
+//         res.status(201).json(responseData);
+//     } catch (error) {
+//         console.error('Error creating category:', error);
+//         res.status(500).json({ error: 'Error creating category' });
+//     }
+// };
+
+
+
 exports.getallCategories = async (req, res) => {
     try {
         // Get the value of the 'selectProduct' query parameter from the request
@@ -69,7 +121,7 @@ exports.getallCategories = async (req, res) => {
         // Define default values
         const defaultName = 'Default Category Name';
         const defaultImage = 'default.jpg';
-        
+
 
         // Map the retrieved data and apply default values where needed
         const responseData = categories.map(category => ({
@@ -109,24 +161,23 @@ exports.delete = (req, res) => {
 
 exports.getItemById = async (req, res) => {
     try {
-      const itemId = req.params.id;
-  
-      // Validate if itemId is a valid ObjectId
-      if (!mongoose.Types.ObjectId.isValid(itemId)) {
-        console.error('Invalid Item ID');
-        return res.status(400).json({ message: "Invalid Item ID" });
-      }
-  
-      const item = await Category1.findById(itemId);
-  
-      if (!item) {
-        return res.status(404).json({ message: "Item not found" });
-      }
-  
-      res.json(item);
+        const itemId = req.params.id;
+
+        // Validate if itemId is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(itemId)) {
+            console.error('Invalid Item ID');
+            return res.status(400).json({ message: "Invalid Item ID" });
+        }
+
+        const item = await Category1.findById(itemId);
+
+        if (!item) {
+            return res.status(404).json({ message: "Item not found" });
+        }
+
+        res.json(item);
     } catch (error) {
-      console.error("Error fetching item:", error);
-      res.status(500).json({ message: "Internal Server Error" });
+        console.error("Error fetching item:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
-  };
-  
+};

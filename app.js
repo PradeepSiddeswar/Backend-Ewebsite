@@ -26,7 +26,6 @@ const ProdectListRoute = require("./Routes/ProdectList_router")
 const CategoriesRoute = require("./Routes/Categories_Router")
 const FormLocationRoute = require("./Routes/FormLocation_Router")
 const distanceRoute = require('./Routes/Distance_router')
-const ImageRoute = require("./Routes/image_router")
 const Category1Route = require("./Routes/Category1_Router")
 const VideoRoute = require("./Routes/video_router")
 const otpRoute = require("./Routes/Otp_router")
@@ -41,14 +40,17 @@ const ItemRoute =require("./Routes/Items_Router")
 const CricketScoreRoute = require("./Routes/CricketScore_Router")
 const NavbarRoute = require("./Routes/Navbar_Router")
 const specialistsRoute = require("./Routes/Specialist_Router")
+const chatRoute = require("./Routes/Chatsms_Router")
+// const LoginProfileRoute = require("./Routes/LoginProfile_Router")
+const TrackingMapRoute = require("./Routes/TrackingMap_Router")
+
+
 
 dotenv.config({ path: '.env'})
 const PORT = process.env.PORT || 8080
 console.log("Server Started", PORT)
 const mongoose = require("mongoose");
-const TotalPayment_Model = require("./Model/TotalPayment_Model")
 mongoose.pluralize(null)
-
 mongoose.connect(process.env.MONGO_URL, {
 
 })
@@ -71,7 +73,6 @@ app.use("/add-cart", ProdectListRoute)
 app.use("/api1", CategoriesRoute)
 app.use("/formLocation", FormLocationRoute)
 app.use('/distances', distanceRoute);
-app.use("/image", ImageRoute)
 app.use("/form", Category1Route)
 app.use("/video", VideoRoute)
 app.use('/userLocation', userlocationRoute) 
@@ -86,3 +87,6 @@ app.use('/item', ItemRoute)
 app.use('/api', CricketScoreRoute)
 app.use('/navbar', NavbarRoute)
 app.use("/specialists", specialistsRoute);
+app.use('/chat', chatRoute);
+// app.use('/LoginProfile',LoginProfileRoute)
+app.use('/tracking', TrackingMapRoute)

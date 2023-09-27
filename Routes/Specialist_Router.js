@@ -7,7 +7,7 @@ const specialistsController = require("../Controller/Specialist_Controller");
 router.get("/get", specialistsController.getAllSpecialists);
 
 // POST a new specialist
-router.post("/",imagemulter.single("image"),specialistsController.create);
+// router.post("/",imagemulter.single("image"),specialistsController.create);
 // Delete a new specialist 
 router.delete('/delete/:id', specialistsController.delete)
 

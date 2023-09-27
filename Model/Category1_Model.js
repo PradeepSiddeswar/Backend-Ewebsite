@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const offerSchema = new mongoose.Schema({
   enterPrice: String,
   enterOffer: String,
-  Image: String,
+  image2: String,
   tagline: String,
-  image: String,
+  image3: String,
 
 });
 
@@ -14,7 +14,7 @@ const category1Schema = new mongoose.Schema({
     type: String,
     default: 'Default shop Name',
   },
-  image : {
+  image1 : {
     type: String,
     default: 'default.jpg',
   },

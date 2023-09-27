@@ -7,7 +7,11 @@ exports.create = async (req, res) => {
     const { itemName, quantity, price } = req.body;
 
     // Create a new item instance
-    const newItem = new Item({ itemName, quantity, price });
+    const newItem = new Item({ 
+      itemName,
+       quantity,
+        price
+     });
 
     // Save the item to the database
     await newItem.save();
