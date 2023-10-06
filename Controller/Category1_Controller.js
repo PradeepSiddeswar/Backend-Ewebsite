@@ -1,5 +1,7 @@
 const Category1 = require('../Model/Category1_Model')
 const mongoose = require('mongoose');
+const Offer = require('../Model/Offer_Model')
+// const { Category1 } = require('../Model/Category1_Model');
 
 exports.create = async (req, res) => {
     try {
@@ -47,100 +49,165 @@ exports.create = async (req, res) => {
 };
 
 
+exports.getAllCategories = async (req, res) => {
+    try {
+        // Retrieve all categories
+        const categories = await Category1.find();
+
+        // Transform the data into the desired format
+        const responseData = categories.map(category => ({
+            _id: category._id,
+            name: category.name,
+            selecteCategories: category.selecteCategories,
+            selectProduct: category.selectProduct,
+            image: category.image, // Include the image path
+            offers: category.offers,
+            locationInfo: category.locationInfo, // Place locationInfo here
+        }));
+
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.error('Error retrieving categories:', error);
+        res.status(500).json({ error: 'Error retrieving categories' });
+    }
+};
+
+
+
 // exports.create = async (req, res) => {
 //     try {
 //         const { name, offers, selecteCategories, selectProduct, locationInfo } = req.body;
 
-//         const defaultName = 'Default shop Name';
-//         const selectedProducts = Array.isArray(selectProduct) ? selectProduct : [selectProduct];
-//         const filteredSelectedProducts = selectedProducts.filter(product => !!product);
+//         // Debugging: Log the received data
+//         console.log('Received Data:');
+//         console.log('Name:', name);
+//         console.log('Selecte Categories:', selecteCategories);
+//         console.log('Select Product:', selectProduct);
 
-//         const category = new Category1({
-//             name: name || defaultName,
-//             image1: req.files['profileImage1'][0]
+//         // Validate required fields
+//         if (!name || !selecteCategories || !selectProduct) {
+//             return res.status(400).json({ error: 'Name, selecteCategories, and selectProduct are required fields' });
+//         }
+
+//         // Handle file uploads only if files are present
+//         let image1 = "";
+//         let profileImage2 = undefined;
+//         let profileImage3 = undefined;
+
+//         if (req.files) {
+//             image1 = req.files['profileImage1'][0]
 //                 ? req.protocol + "://" + req.get("host") + "/images/" + req.files['profileImage1'][0].filename
-//                 : "",
-//             image2: req.files['profileImage2'][0]
+//                 : "";
+
+//             profileImage2 = req.files['profileImage2'][0]
 //                 ? req.protocol + "://" + req.get("host") + "/images/" + req.files['profileImage2'][0].filename
-//                 : "",
-//             image3: req.files['profileImage2'][0]
-//                 ? req.protocol + "://" + req.get("host") + "/images/" + req.files['profileImage2'][0].filename
-//                 : "",
+//                 : undefined;
+
+//             profileImage3 = req.files['profileImage3'][0]
+//                 ? req.protocol + "://" + req.get("host") + "/images/" + req.files['profileImage3'][0].filename
+//                 : undefined;
+//         }
+
+//         const savedOffers = await Promise.all(offers.map(offer => new Offer(offer).save()));
+
+//         // Create a new category
+//         const category = new Category1({
+//             name,
+//             image1,
 //             locationInfo,
-//             offers,
-//             selecteCategories: selecteCategories,
-//             selectProduct: filteredSelectedProducts,
+//             selecteCategories,
+//             selectProduct,
+//             offers: savedOffers.map(offer => offer._id), // Use the offer IDs
 //         });
 
-//         await category.save();
+//         await category.save(); // Save the category
+
+//         // Construct the response data
 //         const responseData = {
 //             _id: category._id,
 //             name: category.name,
-//             image1: req.files['profileImage1'][0]
-//                 ? req.protocol + "://" + req.get("host") + "/images/" + req.files['profileImage1'][0].filename
-//                 : "",
-//             image2: req.files['profileImage2'][0]
-//                 ? req.protocol + "://" + req.get("host") + "/images/" + req.files['profileImage2'][0].filename
-//                 : "",
-//             image3: req.files['profileImage3'][0]
-//                 ? req.protocol + "://" + req.get("host") + "/images/" + req.files['profileImage3'][0].filename
-//                 : "",
 //             locationInfo: category.locationInfo,
-//             offers: category.offers,
+//             image1: category.image1,
 //             selecteCategories: category.selecteCategories,
 //             selectProduct: category.selectProduct,
+//             offers: offers.map(offer => ({
+//                 enterPrice: offer.enterPrice,
+//                 enterOffer: offer.enterOffer,
+//                 tagline: offer.tagline,
+//                 profileImage2, // Add profileImage2 directly
+//                 profileImage3, // Add profileImage3 directly
+//             })),
 //         };
-        
-//         res.status(201).json(responseData);
+
+//         res.status(201).json(responseData); // Respond with success status
 //     } catch (error) {
 //         console.error('Error creating category:', error);
-//         res.status(500).json({ error: 'Error creating category' });
+//         res.status(500).json({ error: 'Error creating category', message: error.message }); // Respond with error status and message
+//     }
+// };
+
+
+// exports.getallCategories = async (req, res) => {
+//     try {
+//         const categories = await Category1.find().populate({
+//             path: 'offers',
+//             select: 'enterPrice enterOffer tagline profileImage2 profileImage3',
+//         });
+
+//         // Transform the data into the desired format
+//         const responseData = categories.map(category => ({
+//             _id: category._id,
+//             name: category.name,
+//             locationInfo: category.locationInfo,
+//             image1: category.image1,
+//             selecteCategories: category.selecteCategories,
+//             selectProduct: category.selectProduct,
+//             offers: category.offers.map(offer => ({
+//                 _id: offer._id,
+//                 enterPrice: offer.enterPrice,
+//                 enterOffer: offer.enterOffer,
+//                 tagline: offer.tagline,
+//                 profileImage2: offer.profileImage2 || '',
+//                 profileImage3: offer.profileImage3 || '',
+//             })),
+//         }));
+
+//         // Debugging: Add console.log statements
+//         console.log('Response Data:', responseData);
+
+//         res.status(200).json(responseData);
+//     } catch (error) {
+//         console.error('Error retrieving categories:', error);
+//         res.status(500).json({ error: 'Error retrieving categories' });
 //     }
 // };
 
 
 
-exports.getallCategories = async (req, res) => {
-    try {
-        // Get the value of the 'selectProduct' query parameter from the request
-        const selectProduct = req.query.selectProduct;
-
-        // Define your filter criteria based on the 'selectProduct' value
-        let filter = {};
-
-        if (selectProduct && selectProduct.length > 0) {
-            // If 'selectProduct' is not empty, filter based on it
-            filter = {
-                selectProduct: { $in: selectProduct } // Use $in to filter categories that match any value in the 'selectProduct' array
-            };
-        }
-
-        // Query the database to retrieve categories
-        const categories = await Category1.find(filter);
-
-        // Define default values
-        const defaultName = 'Default Category Name';
-        const defaultImage = 'default.jpg';
 
 
-        // Map the retrieved data and apply default values where needed
-        const responseData = categories.map(category => ({
-            _id: category._id,
-            name: category.name || defaultName,
-            image: category.image || generateImagePath(category.name || defaultName), // Generate image path based on category name
-            locationInfo: category.locationInfo,
-            offers: category.offers,
-            image: category.image,
-            selecteCategories: category.selecteCategories,
-            selectProduct: category.selectProduct,
-        }));
 
-        res.status(200).json(responseData);
-    } catch (error) {
-        console.error('Error retrieving categories by selectProduct:', error);
-        res.status(500).json({ error: 'Error retrieving categories by selectProduct' });
-    }
-};
+// exports.getallCategories = async (req, res) => {
+//     try {
+//         const categories = await Category1.find().populate('offers'); // Populate offers
+
+//         // Log the populated categories for debugging
+//         console.log('Populated categories:', categories);
+
+//         res.status(200).json(categories);
+//     } catch (error) {
+//         console.error('Error retrieving categories:', error);
+//         res.status(500).json({ error: 'Error retrieving categories' });
+//     }
+// };
+
+
+
+
+
+
+
+
 
 
 exports.delete = (req, res) => {
@@ -181,3 +248,5 @@ exports.getItemById = async (req, res) => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
+
+

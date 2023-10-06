@@ -14,7 +14,7 @@ const category1Schema = new mongoose.Schema({
     type: String,
     default: 'Default shop Name',
   },
-  image1 : {
+  image : {
     type: String,
     default: 'default.jpg',
   },
@@ -27,3 +27,33 @@ const category1Schema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Category1', category1Schema);
+
+// const Offer = require('./Offer_Model')
+// const mongoose = require('mongoose');
+
+// const category1Schema = new mongoose.Schema({
+//     name: String,
+//     image1: String,
+//     locationInfo: String,
+//     selecteCategories: String,
+//     selectProduct: [String],
+//     offers: [
+//         {
+//             type: mongoose.Schema.Types.ObjectId,
+//             ref: 'Offer', // Reference the 'Offer' model
+//         }
+//     ],
+// });
+
+// const Category1 = mongoose.model('Category1', category1Schema);
+
+// module.exports = Category1;
+
+
+
+
+
+
+
+
+
