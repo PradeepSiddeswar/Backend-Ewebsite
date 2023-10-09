@@ -5,7 +5,7 @@ const categort1controller = require('../Controller/Category1_Controller')
 const uploadMultiple = require('../config/image_multer')
 
 router.post('/form', uploadMultiple, categort1controller.create)
-router.get('/get', categort1controller.getAllCategories)
+router.get('/get', categort1controller.getallCategories)
 router.delete('/delete/:id',categort1controller.delete)
 // router.get('/items/:id',categort1controller.find)
 router.get('/items/:id',categort1controller.getItemById)

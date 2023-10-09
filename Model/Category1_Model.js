@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 const offerSchema = new mongoose.Schema({
@@ -27,7 +28,6 @@ const category1Schema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Category1', category1Schema);
-
 // const Offer = require('./Offer_Model')
 // const mongoose = require('mongoose');
 

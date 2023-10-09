@@ -49,26 +49,46 @@ exports.create = async (req, res) => {
 };
 
 
-exports.getAllCategories = async (req, res) => {
-    try {
-        // Retrieve all categories
-        const categories = await Category1.find();
 
-        // Transform the data into the desired format
+exports.getallCategories = async (req, res) => {
+    try {
+        // Get the value of the 'selectProduct' query parameter from the request
+        const selectProduct = req.query.selectProduct;
+
+        // Define your filter criteria based on the 'selectProduct' value
+        let filter = {};
+
+        if (selectProduct && selectProduct.length > 0) {
+            // If 'selectProduct' is not empty, filter based on it
+            filter = {
+                selectProduct: { $in: selectProduct } // Use $in to filter categories that match any value in the 'selectProduct' array
+            };
+        }
+
+        // Query the database to retrieve categories
+        const categories = await Category1.find(filter);
+
+        // Define default values
+        const defaultName = 'Default Category Name';
+        const defaultImage = 'default.jpg';
+
+
+        // Map the retrieved data and apply default values where needed
         const responseData = categories.map(category => ({
             _id: category._id,
-            name: category.name,
+            name: category.name || defaultName,
+            image: category.image || generateImagePath(category.name || defaultName), // Generate image path based on category name
+            locationInfo: category.locationInfo,
+            offers: category.offers,
+            image: category.image,
             selecteCategories: category.selecteCategories,
             selectProduct: category.selectProduct,
-            image: category.image, // Include the image path
-            offers: category.offers,
-            locationInfo: category.locationInfo, // Place locationInfo here
         }));
 
         res.status(200).json(responseData);
     } catch (error) {
-        console.error('Error retrieving categories:', error);
-        res.status(500).json({ error: 'Error retrieving categories' });
+        console.error('Error retrieving categories by selectProduct:', error);
+        res.status(500).json({ error: 'Error retrieving categories by selectProduct' });
     }
 };
 
@@ -181,31 +201,6 @@ exports.getAllCategories = async (req, res) => {
 //         res.status(500).json({ error: 'Error retrieving categories' });
 //     }
 // };
-
-
-
-
-
-
-// exports.getallCategories = async (req, res) => {
-//     try {
-//         const categories = await Category1.find().populate('offers'); // Populate offers
-
-//         // Log the populated categories for debugging
-//         console.log('Populated categories:', categories);
-
-//         res.status(200).json(categories);
-//     } catch (error) {
-//         console.error('Error retrieving categories:', error);
-//         res.status(500).json({ error: 'Error retrieving categories' });
-//     }
-// };
-
-
-
-
-
-
 
 
 
