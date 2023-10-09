@@ -44,6 +44,10 @@ const chatRoute = require("./Routes/Chatsms_Router")
 // const LoginProfileRoute = require("./Routes/LoginProfile_Router")
 const TrackingMapRoute = require("./Routes/TrackingMap_Router")
 const DeliveryPartnerRoute = require("./Routes/DeliveryPartner_Router")
+const CartTotalRoute = require("./Routes/CartTotal_Router")
+const PaymentInfoRoute = require("./Routes/PaymentInfo_Router")
+
+
 
 
 dotenv.config({ path: '.env'})
@@ -91,3 +95,5 @@ app.use('/chat', chatRoute);
 // app.use('/LoginProfile',LoginProfileRoute)
 app.use('/tracking', TrackingMapRoute)
 app.use('/delivery-form', DeliveryPartnerRoute)
+app.use('/cart-total-price', CartTotalRoute)
+app.use('/payment-method', PaymentInfoRoute)
