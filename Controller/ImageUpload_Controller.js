@@ -22,3 +22,14 @@ exports.create = async(req, res) => {
                     })
                    })
 }
+
+exports.get =  (req, res) => {
+    console.log(req.query,"user")
+    ImageUploadDB.find({user_id:req.query.user_id})
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(error => {
+            res.status(500).json(error)
+        })
+}

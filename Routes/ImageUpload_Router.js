@@ -5,5 +5,6 @@ const imageuploadcontroller = require("../Controller/ImageUpload_Controller")
 
 
 route.post("/", ImageUpload_Multer.single("image"), imageuploadcontroller.create)
+route.get("/images",imageuploadcontroller.get)
 
 module.exports = route
