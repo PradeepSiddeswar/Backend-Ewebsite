@@ -14,8 +14,10 @@ const itemSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  // You can add more fields as needed for your use case
-  // For example, you might want to include a date field for the purchase date.
+  returnedQuantity : {
+    type: Number,
+    required: true
+  }
 });
 
 // Create the Item model based on the schema

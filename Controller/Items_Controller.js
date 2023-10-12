@@ -4,13 +4,14 @@ const Item = require('../Model/Items_Model'); // Import the Item model
 // POST route to add a new item purchase
 exports.create = async (req, res) => {
   try {
-    const { itemName, quantity, price } = req.body;
+    const { itemName, quantity, price,returnedQuantity } = req.body;
 
     // Create a new item instance
     const newItem = new Item({ 
       itemName,
        quantity,
-        price
+        price,
+        returnedQuantity
      });
 
     // Save the item to the database
@@ -64,6 +65,8 @@ exports.getItemReturned = async (req, res) => {
               $push: {
                 _id: '$_id',
                 itemName: '$itemName',
+                quantity: '$quantity',
+                price: '$price',
                 returnedQuantity: '$returnedQuantity', // Change this field to match your model
               },
             },

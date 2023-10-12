@@ -3,7 +3,7 @@ const  PaymentInfo = require("../Model/PaymentInfo_Model")
 // Import necessary modules and models
 
 exports.create = async (req, res) => {
-    const { userlocation, paymentMethod } = req.body;
+    const { userLocation, paymentMethod } = req.body;
 
     // Check the selected payment method
     if (paymentMethod === "Credit Card") {
@@ -25,5 +25,10 @@ exports.create = async (req, res) => {
     // Save the user's location and payment information to the database
     // Example: User.saveLocationAndPaymentInfo(req.user.id, location, paymentMethod);
 
-    return res.status(200).json({ message: "Location and payment information saved successfully." });
+    // Send only userLocation and paymentMethod in the response
+    return res.status(200).json({
+        userLocation: userLocation,
+        paymentMethod: paymentMethod
+    });
 };
+
