@@ -1,44 +1,37 @@
 const Category1 = require('../Model/Category1_Model')
-const mongoose = require('mongoose');
-const Offer = require('../Model/Offer_Model')
-// const { Category1 } = require('../Model/Category1_Model');
+
 
 exports.create = async (req, res) => {
     try {
-        const { name, offers, selecteCategories, selectProduct,  locationInfo } = req.body;
+        const { name, offers, selecteCategories, selectProduct, locationInfo } = req.body;
 
-        const image = (req.body.image && req.body.image.trim() !== '') ? req.body.image
-         : generateImagePath(name ||defaultName);
-
-        const defaultName = 'Default shop Name';
+        const image = req.body.image || generateImagePath(name || 'Default shop Name');
 
         const selectedProducts = Array.isArray(selectProduct) ? selectProduct : [selectProduct];
 
-        // Filter out any empty selectedProducts
-        const filteredSelectedProducts = selectedProducts.filter(product => !!product);
-
         const category = new Category1({
-            name: name || defaultName,
+            name: name || 'Default shop Name',
             image: image,
-            locationInfo,
-            offers,
+            locationInfo: locationInfo,
+            offers: offers.map(offer => ({
+                enterPrice: offer.enterPrice,
+                enterOffer: offer.enterOffer || '0',
+                tagline: offer.tagline,
+                image: offer.image,
+            })),
             selecteCategories: selecteCategories,
-            selectProduct: filteredSelectedProducts,
+            selectProduct: selectedProducts,
         });
 
         await category.save();
 
-
-
-        // Include the image path in the response
-         responseData = {
-            _id: category._id,
+        const responseData = {
             name: category.name,
+            image: category.image,
+            locationInfo: category.locationInfo,
+            offers: category.offers,
             selecteCategories: category.selecteCategories,
             selectProduct: category.selectProduct,
-            image: category.image, // Include the image path
-            offers: category.offers,
-            locationInfo: category.locationInfo, // Place locationInfo here
         };
 
         res.status(201).json(responseData);
@@ -47,7 +40,6 @@ exports.create = async (req, res) => {
         res.status(500).json({ error: 'Error creating category' });
     }
 };
-
 
 
 exports.getallCategories = async (req, res) => {
