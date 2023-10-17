@@ -48,7 +48,10 @@ const CartTotalRoute = require("./Routes/CartTotal_Router")
 const PaymentInfoRoute = require("./Routes/PaymentInfo_Router")
 const OrderItemsRoute = require("./Routes/OrderItems_Router")
 const ShippingOrdersRoute = require("./Routes/ShippingOrders_Router")
+const OrdersDetailsRoute = require("./Routes/OrdersDetails_Router")
 const ImageUploadRoute = require("./Routes/ImageUpload_Router")
+
+
 
 dotenv.config({ path: '.env'})
 const PORT = process.env.PORT || 8080
@@ -99,4 +102,5 @@ app.use('/cart-total-price', CartTotalRoute)
 app.use('/payment-method', PaymentInfoRoute)
 app.use('/orders', OrderItemsRoute)
 app.use('/shipping-orders', ShippingOrdersRoute)
+app.use('/orders-details', OrdersDetailsRoute)
 app.use('/image-upload', ImageUploadRoute)

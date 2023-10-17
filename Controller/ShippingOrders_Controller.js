@@ -5,10 +5,8 @@ const { geocodeAddress } = require('../services/geocoding'); // Implement the ge
 // Create a new shipping order
 exports.createShippingOrder = async (req, res) => {
   try {
-    // Destructure the fields from the request body
     const { name, status } = req.body;
 
-    // Create a new shipping order using uuidv4 for orderId and the provided fields
     const newShippingOrder = new ShippingOrder({
       orderId: uuidv4(), // Automatically generates a unique Order ID
       name: name, // Extracted from the request body
@@ -28,28 +26,22 @@ exports.createShippingOrder = async (req, res) => {
 
 
 exports.getLocationByOrderId = async (req, res) => {
-    try {
-      // Extract the order ID from the request parameters
-      const orderId = req.params.orderId;
-  
-      // Find the shipping order in the database by order ID
-      const shippingOrder = await ShippingOrder.findOne({ orderId });
-  
-      // If the order is not found, return a 404 response
-      if (!shippingOrder) {
-        return res.status(404).json({ error: 'Order not found' });
-      }
-  
-      // Extract the address (name) from the shipping order
-      const { name } = shippingOrder;
-  
-      // Use the geocoding service to obtain coordinates (latitude and longitude)
-      const coordinates = await geocodeAddress(name);
-  
-      // Respond with the coordinates
-      res.json(coordinates);
-    } catch (error) {
-      console.error('Error retrieving location data:', error);
-      res.status(500).json({ error: 'Internal server error' });
+  try {
+    const orderId = req.params.orderId;
+
+    const shippingOrder = await ShippingOrder.findOne({ orderId });
+
+    if (!shippingOrder) {
+      return res.status(404).json({ error: 'Order not found' });
     }
-  };
+
+    const { name } = shippingOrder;
+
+    const coordinates = await geocodeAddress(name);
+
+    res.json(coordinates);
+  } catch (error) {
+    console.error('Error retrieving location data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
