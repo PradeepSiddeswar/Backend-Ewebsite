@@ -12,7 +12,6 @@ exports.create = async (req, res) => {
 
     const ordersdetails = new OrdersDetails({
         orderId: uuidv4(),
-        image: req.file && req.file.filename ? req.protocol + "://" + req.get("host") + "/images/" + req.file.filename : "",
         productName: req.body.productName,
         totalitems: req.body.totalitems, // Use 'totalitems'
         price: req.body.price,
@@ -29,8 +28,7 @@ exports.create = async (req, res) => {
     // Create the individual item object
     const individualItem = {
         id: ordersdetails.orderId,
-        image: ordersdetails.image,
-        name: ordersdetails.productName,
+        productName: ordersdetails.productName,
         price: ordersdetails.price,
         "total items": ordersdetails.totalitems,
         offer: ordersdetails.offer,
@@ -55,6 +53,7 @@ exports.create = async (req, res) => {
             });
         });
 };
+
 
 
 
@@ -84,8 +83,8 @@ exports.get = async (req, res) => {
       const response = allOrders.map(order => ({
         id: order._id, // MongoDB _id
         orderId: order.orderId, // Unique orderId
-        image: order.image,
-        name: order.productName,
+        // image: order.image,
+        productName: order.productName,
         price: order.price,
         'total items': order.totalitems,
         offer: order.offer,

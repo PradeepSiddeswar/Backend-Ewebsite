@@ -3,7 +3,7 @@ const router = express.Router();
 const chatsmsController = require('../Controller/Chatsms_Controller');
 
 // Create a new chat message
-router.post('/message', chatsmsController.createMessage);
+router.post('/text', chatsmsController.createMessage);
 
 // Get all chat messages
 router.get('/messages', chatsmsController.getMessages);

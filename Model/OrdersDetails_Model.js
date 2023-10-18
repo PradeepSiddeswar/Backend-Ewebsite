@@ -10,10 +10,10 @@ const ordersdetailsSchema = new mongoose.Schema({
     default: uuidv4(),
     required: true,
   },
-  image: {
-    type: String,
-    required: true,
-  },
+  // image: {
+  //   type: String,
+  //   required: true,
+  // },
   productName: {
     type: String,
     required: true,
