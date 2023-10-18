@@ -65,9 +65,44 @@ exports.get = async (req, res) => {
       // Use Mongoose to find all order details
       const allOrders = await OrdersDetails.find();
   
-      res.status(200).json(allOrders);
+      // Calculate total price and total items
+      let totalPrice = 0;
+      let totalItems = 0;
+  
+      for (const order of allOrders) {
+        totalPrice += order.price * order.totalitems * (1 - order.offer);
+        totalItems += order.totalitems;
+      }
+  
+      // Create the total object
+      const totalObject = {
+        'total price': totalPrice.toFixed(2),
+        'Total items': totalItems,
+      };
+  
+      // Add the total object to the response
+      const response = [...allOrders, totalObject];
+  
+      res.status(200).json(response);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
     }
   };
+  
+  // delete
+
+  exports.delete = (req, res) => {
+    const id = req.params.id
+    OrdersDetails.findByIdAndDelete(id)
+        .then(data => {
+            if (!data) {
+                res.status(400).send(`category not found with ${id}`)
+            } else {
+                res.send("orders deleted successfully")
+            }
+        })
+        .catch(error => {
+            res.status(500).send(error)
+        })
+}

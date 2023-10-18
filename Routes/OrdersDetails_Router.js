@@ -6,6 +6,6 @@ const ordersdetailscontroller = require("../Controller/OrdersDetails_Controller"
 
 route.post("/", imagemulter.single("image"), ordersdetailscontroller.create)
 route.get("/getAll",ordersdetailscontroller.get)
-// route.delete("/delete/:id", customer1signupcontroller.delete)
+route.delete("/delete/:id", ordersdetailscontroller.delete)
 
 module.exports = route
