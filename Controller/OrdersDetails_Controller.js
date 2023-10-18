@@ -80,8 +80,20 @@ exports.get = async (req, res) => {
         'Total items': totalItems,
       };
   
+      // Map the response with both id and orderId
+      const response = allOrders.map(order => ({
+        id: order._id, // MongoDB _id
+        orderId: order.orderId, // Unique orderId
+        image: order.image,
+        name: order.productName,
+        price: order.price,
+        'total items': order.totalitems,
+        offer: order.offer,
+        'total price': (order.price * order.totalitems * (1 - order.offer)).toFixed(2),
+      }));
+  
       // Add the total object to the response
-      const response = [...allOrders, totalObject];
+      response.push(totalObject);
   
       res.status(200).json(response);
     } catch (error) {
@@ -89,6 +101,8 @@ exports.get = async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
   };
+
+
   
   // delete
 
