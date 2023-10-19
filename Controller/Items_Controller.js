@@ -35,6 +35,7 @@ exports.get = async (req, res) => {
               $push: {
                 _id: '$_id',
                 itemName: '$itemName',
+                price: '$price',
                 quantity: '$quantity',
               },
             },
