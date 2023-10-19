@@ -8,5 +8,5 @@ route.post("/", imagemulter.single("image"), customer1signupcontroller.create)
 route.get("/getAll",customer1signupcontroller.get)
 route.put("/update/:id", customer1signupcontroller.update)
 route.delete("/delete/:id", customer1signupcontroller.delete)
-
+route.get("/profiles/:profileId", customer1signupcontroller.getProfile)
 module.exports = route

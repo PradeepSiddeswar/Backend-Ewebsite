@@ -40,6 +40,32 @@ exports.get =  (req, res) => {
         })
 }
 
+exports.getProfile = async (req, res) => {
+    const profileId = req.params.profileId; // Correct the parameter name to 'profileId'
+
+    console.log("Received request for profileId: ", profileId); // Add this line for debugging
+
+    try {
+        const profile = await Customer1SignupDB.findById(profileId);
+
+        console.log("Retrieved profile from the database: ", profile); // Add this line for debugging
+
+        if (!profile) {
+            console.log("Profile not found in the database"); // Add this line for debugging
+            return res.status(404).json({ message: 'Profile not found' });
+        }
+
+        res.status(200).json(profile);
+    } catch (error) {
+        console.error("Error while retrieving profile:", error); // Add this line for debugging
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+
+
+
+
 // update id 
 exports.update = async (req, res) => {
     if (!req.body) {
