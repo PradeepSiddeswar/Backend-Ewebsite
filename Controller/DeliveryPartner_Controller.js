@@ -35,3 +35,38 @@ exports.create = async (req, res) => {
             })
         })
 }
+
+// getall
+
+exports.get =  (req, res) => {
+    console.log(req.query,"user")
+    User.find({user_id:req.query.user_id})
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(error => {
+            res.status(500).json(error)
+        })
+}
+
+exports.getProfile = async (req, res) => {
+    const profileId = req.params.profileId; // Correct the parameter name to 'profileId'
+
+    console.log("Received request for profileId: ", profileId); // Add this line for debugging
+
+    try {
+        const profile = await User.findById(profileId);
+
+        console.log("Retrieved profile from the database: ", profile); // Add this line for debugging
+
+        if (!profile) {
+            console.log("Profile not found in the database"); // Add this line for debugging
+            return res.status(404).json({ message: 'Profile not found' });
+        }
+
+        res.status(200).json(profile);
+    } catch (error) {
+        console.error("Error while retrieving profile:", error); // Add this line for debugging
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
